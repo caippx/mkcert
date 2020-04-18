@@ -306,11 +306,9 @@ func (m *mkcert) newCA() {
 
 	tpl := &x509.Certificate{
 		SerialNumber: randomSerialNumber(),
-		domain := strings.Replace(hosts[0], ":", "_", -1)
-		domain = strings.Replace(defaultName, "*", "_wildcard", -1)
 		Subject: pkix.Name{
 			Organization:       []string{"PPX CA"},
-			OrganizationalUnit: []string{domain},
+			OrganizationalUnit: []string{defaultName},
 
 			// The CommonName is required by iOS to show the certificate in the
 			// "Certificate Trust Settings" menu.
