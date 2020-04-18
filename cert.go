@@ -308,7 +308,7 @@ func (m *mkcert) newCA() {
 		SerialNumber: randomSerialNumber(),
 		Subject: pkix.Name{
 			Organization:       []string{"PPX CA"},
-			OrganizationalUnit: []string{defaultName},
+			OrganizationalUnit: []string{hosts[0]},
 
 			// The CommonName is required by iOS to show the certificate in the
 			// "Certificate Trust Settings" menu.
