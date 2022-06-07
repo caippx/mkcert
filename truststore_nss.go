@@ -27,7 +27,9 @@ var (
 		"/usr/bin/firefox",
 		"/usr/bin/firefox-nightly",
 		"/usr/bin/firefox-developer-edition",
+		"/snap/firefox",
 		"/Applications/Firefox.app",
+		"/Applications/FirefoxDeveloperEdition.app",
 		"/Applications/Firefox Developer Edition.app",
 		"/Applications/Firefox Nightly.app",
 		"C:\\Program Files\\Mozilla Firefox",
@@ -127,8 +129,12 @@ func execCertutil(cmd *exec.Cmd) ([]byte, error) {
 }
 
 func (m *mkcert) forEachNSSProfile(f func(profile string)) (found int) {
-	profiles, _ := filepath.Glob(FirefoxProfile)
+	var profiles []string
 	profiles = append(profiles, nssDBs...)
+	for _, ff := range FirefoxProfiles {
+		pp, _ := filepath.Glob(ff)
+		profiles = append(profiles, pp...)
+	}
 	for _, profile := range profiles {
 		if stat, err := os.Stat(profile); err != nil || !stat.IsDir() {
 			continue
